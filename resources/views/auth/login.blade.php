@@ -9,6 +9,7 @@
 
     <style>
         body{
+            
             background: linear-gradient(135deg,#166534,#22c55e);
             min-height:100vh;
             display:flex;
