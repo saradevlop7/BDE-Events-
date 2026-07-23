@@ -15,7 +15,7 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Sidebar */
+    
 
         .sidebar {
             width: 270px;
