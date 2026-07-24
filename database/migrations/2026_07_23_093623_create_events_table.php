@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2)->default(0);
             $table->integer('capacity');
             $table->timestamps();
+            
         });
     }
 
@@ -30,7 +31,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        
+
         Schema::dropIfExists('events');
     }
 };
