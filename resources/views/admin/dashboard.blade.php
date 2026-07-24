@@ -4,18 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard admin </title>
+    <title>Dashboard Étudiant | BDE Events</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-
             background: linear-gradient(135deg, #14532d, #16a34a, #4ade80);
             min-height: 100vh;
             font-family: 'Segoe UI', sans-serif;
         }
-
-    
 
         .sidebar {
             width: 270px;
@@ -64,8 +62,6 @@
             background: rgba(255, 255, 255, .2);
             transform: translateX(8px);
         }
-
-        /* Content */
 
         .content {
             margin-left: 290px;
@@ -147,33 +143,31 @@
     <div class="sidebar">
 
         <div class="logo">
-            🎉
+            🎓
         </div>
 
         <h2>BDE Events</h2>
 
-        <a href="{{ route('admin.dashboard') }}">
+        <a href="{{ route('student.dashboard') }}">
             🏠 Dashboard
         </a>
 
         <a href="{{ route('events.index') }}">
-            📅 Gestion des événements
+            📅 Événements
         </a>
 
-        <a href="{{ route('events.create') }}">
-            ➕ Ajouter un événement
+        <a href="#">
+            🎫 Mes Billets
         </a>
 
         <hr>
 
         <form action="{{ route('logout') }}" method="POST">
-
             @csrf
 
             <button class="btn btn-danger w-100">
                 Déconnexion
             </button>
-
         </form>
 
     </div>
@@ -187,8 +181,8 @@
             </h3>
 
             <p class="text-muted mb-0">
-                Bienvenue dans votre espace d'administration BDE Events.
-                Gérez facilement les événements du campus.
+                Bienvenue dans votre espace étudiant BDE Events.
+                Consultez les événements et gérez vos réservations facilement.
             </p>
 
         </div>
@@ -199,7 +193,7 @@
 
                 <div class="card card-dashboard">
 
-                    <h5>📅 Total Événements</h5>
+                    <h5>📅 Événements</h5>
 
                     <div class="stat">
                         0
@@ -213,7 +207,7 @@
 
                 <div class="card card-dashboard">
 
-                    <h5>🎫 Réservations</h5>
+                    <h5>🎫 Mes Billets</h5>
 
                     <div class="stat">
                         0
@@ -227,7 +221,7 @@
 
                 <div class="card card-dashboard">
 
-                    <h5>🎓 Étudiants</h5>
+                    <h5>⭐ Réservations</h5>
 
                     <div class="stat">
                         0
@@ -244,11 +238,11 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
 
                 <h4 class="fw-bold text-success">
-                    Gestion des événements
+                    Événements disponibles
                 </h4>
 
-                <a href="{{ route('events.create') }}" class="btn btn-green">
-                    ➕ Nouvel événement
+                <a href="{{ route('events.index') }}" class="btn btn-green">
+                    📅 Voir les événements
                 </a>
 
             </div>
@@ -263,7 +257,7 @@
                         <th>Date</th>
                         <th>Lieu</th>
                         <th>Prix</th>
-                        <th>Actions</th>
+                        <th>Réserver</th>
 
                     </tr>
 
