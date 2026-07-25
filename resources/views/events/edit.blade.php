@@ -17,6 +17,7 @@
             Modifier un événement
         </h2>
 
+        
         <form action="{{ route('events.update',$event) }}" method="POST">
 
             @csrf
