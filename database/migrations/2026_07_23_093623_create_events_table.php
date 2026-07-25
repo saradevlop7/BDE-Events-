@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2)->default(0);
             $table->integer('capacity');
             $table->timestamps();
-            
+        
         });
     }
 

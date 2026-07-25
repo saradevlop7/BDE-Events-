@@ -1,47 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Liste des événements</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-light">
 
-<div class="max-w-6xl mx-auto mt-10">
+    <div class="container mt-5">
 
-    <div class="flex justify-between items-center mb-6">
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h1 class="text-3xl font-bold text-green-700">
-            📅 Liste des événements
-        </h1>
+            <h2 class="text-success">
+                📅 Liste des événements
+            </h2>
 
-        <a href="{{ route('events.create') }}"
-           class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
-            + Nouvel événement
-        </a>
+            @auth
+                @if (auth()->user()->role == 'admin')
+                    <a href="{{ route('events.create') }}" class="btn btn-success">
+                        + Nouvel événement
+                    </a>
+                @endif
+            @endauth
 
-    </div>
-
-    @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
-            {{ session('success') }}
         </div>
-    @endif
 
-    <div class="bg-white shadow rounded-lg overflow-hidden">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-        <table class="w-full">
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 
-            <thead class="bg-green-600 text-white">
+        <table class="table table-bordered table-hover bg-white">
+
+            <thead class="table-success">
 
                 <tr>
-                    <th class="p-3">Titre</th>
-                    <th class="p-3">Date</th>
-                    <th class="p-3">Heure</th>
-                    <th class="p-3">Lieu</th>
-                    <th class="p-3">Prix</th>
-                    <th class="p-3">Capacité</th>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Lieu</th>
+                    <th>Prix</th>
+                    <th>Capacité</th>
+                    <th>Action</th>
                 </tr>
 
             </thead>
@@ -49,26 +59,44 @@
             <tbody>
 
                 @forelse($events as $event)
+                    <tr>
 
-                    <tr class="border-b text-center">
-
-                        <td class="p-3">{{ $event->title }}</td>
+                        <td>{{ $event->title }}</td>
                         <td>{{ $event->date }}</td>
                         <td>{{ $event->time }}</td>
                         <td>{{ $event->location }}</td>
                         <td>{{ $event->price }} DH</td>
                         <td>{{ $event->capacity }}</td>
 
+                        <td>
+
+                            @if (auth()->user()->role == 'student')
+                                <form action="{{ route('reservations.store', $event) }}" method="POST">
+
+                                    @csrf
+
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        S'inscrire
+                                    </button>
+
+                                </form>
+                            @else
+                                <span class="text-muted">Admin</span>
+                            @endif
+
+                        </td>
+
                     </tr>
 
                 @empty
 
                     <tr>
-                        <td colspan="6" class="p-5 text-center text-gray-500">
+
+                        <td colspan="7" class="text-center">
                             Aucun événement disponible.
                         </td>
-                    </tr>
 
+                    </tr>
                 @endforelse
 
             </tbody>
@@ -77,7 +105,6 @@
 
     </div>
 
-</div>
-
 </body>
+
 </html>

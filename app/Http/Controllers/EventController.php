@@ -11,6 +11,7 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
+
         return view('events.index', compact('events'));
     }
 
@@ -77,5 +78,20 @@ class EventController extends Controller
 
         return redirect()->route('events.index')
             ->with('success', 'Événement supprimé avec succès.');
+    }
+    // Dashboard étudiant
+
+    public function dashboard()
+    {
+        $events = Event::all();
+
+        return view('student.dashboard', compact('events'));
+    }
+    // Dashboard Admin
+    public function adminDashboard()
+    {
+        $events = Event::latest()->get();
+
+        return view('admin.dashboard', compact('events'));
     }
 }

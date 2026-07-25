@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    
     use HasFactory;
 
     protected $fillable = [
@@ -19,4 +18,9 @@ class Event extends Model
         'price',
         'capacity',
     ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

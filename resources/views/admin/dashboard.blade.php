@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Étudiant | BDE Events</title>
+    <title>Dashboard Admin | BDE Events</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -22,7 +22,7 @@
             top: 0;
             left: 0;
             background: linear-gradient(180deg, #166534, #22c55e);
-            color: white;
+            color: #fff;
             padding: 35px 20px;
             box-shadow: 5px 0 20px rgba(0, 0, 0, .2);
         }
@@ -30,7 +30,7 @@
         .logo {
             width: 90px;
             height: 90px;
-            background: white;
+            background: #fff;
             color: #16a34a;
             border-radius: 50%;
             display: flex;
@@ -50,7 +50,7 @@
         .sidebar a {
             display: block;
             text-decoration: none;
-            color: white;
+            color: #fff;
             padding: 14px 18px;
             border-radius: 12px;
             margin-bottom: 12px;
@@ -69,7 +69,7 @@
         }
 
         .topbar {
-            background: white;
+            background: #fff;
             border-radius: 20px;
             padding: 25px 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
@@ -101,7 +101,7 @@
 
         .btn-green {
             background: #16a34a;
-            color: white;
+            color: #fff;
             border: none;
             border-radius: 12px;
             padding: 12px 25px;
@@ -111,11 +111,6 @@
         .btn-green:hover {
             background: #166534;
             color: white;
-        }
-
-        .btn-danger {
-            border-radius: 12px;
-            font-weight: bold;
         }
 
         .table-card {
@@ -148,23 +143,22 @@
 
         <h2>BDE Events</h2>
 
-        <a href="{{ route('student.dashboard') }}">
+        <a href="{{ route('admin.dashboard') }}">
             🏠 Dashboard
         </a>
 
-        <a href="{{ route('events.index') }}">
-            📅 Événements
+        <a href="{{ route('events.create') }}">
+            ➕ Ajouter événement
         </a>
 
-        <a href="#">
-            🎫 Mes Billets
+        <a href="{{ route('events.index') }}">
+            📅 Tous les événements
         </a>
 
         <hr>
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-
             <button class="btn btn-danger w-100">
                 Déconnexion
             </button>
@@ -181,8 +175,7 @@
             </h3>
 
             <p class="text-muted mb-0">
-                Bienvenue dans votre espace étudiant BDE Events.
-                Consultez les événements et gérez vos réservations facilement.
+                Gérez les événements et les réservations depuis votre espace administrateur.
             </p>
 
         </div>
@@ -190,45 +183,30 @@
         <div class="row">
 
             <div class="col-md-4 mb-4">
-
                 <div class="card card-dashboard">
-
                     <h5>📅 Événements</h5>
-
                     <div class="stat">
-                        0
+                        {{ $events->count() }}
                     </div>
-
                 </div>
-
             </div>
 
             <div class="col-md-4 mb-4">
-
                 <div class="card card-dashboard">
-
-                    <h5>🎫 Mes Billets</h5>
-
+                    <h5>👥 Étudiants</h5>
                     <div class="stat">
-                        0
+                        {{ \App\Models\User::where('role', 'student')->count() }}
                     </div>
-
                 </div>
-
             </div>
 
             <div class="col-md-4 mb-4">
-
                 <div class="card card-dashboard">
-
-                    <h5>⭐ Réservations</h5>
-
+                    <h5>🎫 Réservations</h5>
                     <div class="stat">
-                        0
+                        {{ \App\Models\Reservation::count() }}
                     </div>
-
                 </div>
-
             </div>
 
         </div>
@@ -238,42 +216,84 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
 
                 <h4 class="fw-bold text-success">
-                    Événements disponibles
+                    Liste des événements
                 </h4>
 
-                <a href="{{ route('events.index') }}" class="btn btn-green">
-                    📅 Voir les événements
+                <a href="{{ route('events.create') }}" class="btn btn-green">
+                    ➕ Ajouter un événement
                 </a>
 
             </div>
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             <table class="table table-hover align-middle">
 
                 <thead>
 
                     <tr>
-
                         <th>Titre</th>
                         <th>Date</th>
                         <th>Lieu</th>
                         <th>Prix</th>
-                        <th>Réserver</th>
-
+                        <th>Actions</th>
                     </tr>
 
                 </thead>
 
                 <tbody>
+                    @forelse($events as $event)
+                        <tr>
 
-                    <tr>
+                            <td>{{ $event->title }}</td>
 
-                        <td colspan="5" class="text-center text-muted py-4">
+                            <td>{{ $event->date }}</td>
 
-                            Aucun événement disponible.
+                            <td>{{ $event->location }}</td>
 
-                        </td>
+                            <td>{{ $event->price }} DH</td>
 
-                    </tr>
+                            <td>
+
+                                <a href="{{ route('events.edit', $event) }}" class="btn btn-warning btn-sm">
+                                    Modifier
+                                </a>
+
+                                <form action="{{ route('events.destroy', $event) }}" method="POST"
+                                    style="display:inline;">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Supprimer cet événement ?')">
+
+                                        Supprimer
+
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                    @empty
+
+                        <tr>
+
+                            <td colspan="5" class="text-center py-4">
+
+                                Aucun événement disponible.
+
+                            </td>
+
+                        </tr>
+                    @endforelse
 
                 </tbody>
 
