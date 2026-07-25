@@ -15,9 +15,10 @@
 
         <h2 class="mb-4 text-success">
             Modifier un événement
+            
         </h2>
 
-        
+
         <form action="{{ route('events.update',$event) }}" method="POST">
 
             @csrf
