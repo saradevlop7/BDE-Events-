@@ -23,6 +23,7 @@
 
 BDE Events est une application Laravel permettant à l'administration du BDE de gérer les événements du campus et aux étudiants de réserver leur place en ligne et consulter leurs billets.
 
+
 ---
 
 ## Fonctionnalités
