@@ -10,6 +10,7 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+    
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2)->default(0);
             $table->integer('capacity');
             $table->timestamps();
-        
+
         });
     }
 
