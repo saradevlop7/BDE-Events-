@@ -219,6 +219,7 @@
                     Liste des événements
                 </h4>
 
+
                 <a href="{{ route('events.create') }}" class="btn btn-green">
                     ➕ Ajouter un événement
                 </a>
@@ -240,6 +241,7 @@
                         <th>Date</th>
                         <th>Lieu</th>
                         <th>Prix</th>
+                        <th>Places restantes</th>
                         <th>Actions</th>
                     </tr>
 
@@ -256,6 +258,9 @@
                             <td>{{ $event->location }}</td>
 
                             <td>{{ $event->price }} DH</td>
+                            <td>
+                                {{ $event->capacity - $event->reservations->count() }}
+                            </td>
 
                             <td>
 
@@ -286,10 +291,8 @@
 
                         <tr>
 
-                            <td colspan="5" class="text-center py-4">
-
+                            <td colspan="6" class="text-center py-4">
                                 Aucun événement disponible.
-
                             </td>
 
                         </tr>
