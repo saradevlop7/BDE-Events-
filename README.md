@@ -85,7 +85,6 @@ php artisan migrate
 
 php artisan serve
 ```
-
 ---
 
 ## Comptes de test
