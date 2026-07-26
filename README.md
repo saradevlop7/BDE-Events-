@@ -17,8 +17,7 @@
 
 ![ERD](docs/erd.png)
 
-
-# BDE Events
+ BDE Events
 
 ## Description
 
