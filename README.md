@@ -94,8 +94,9 @@ php artisan serve
 
 Email :
 
+
 ```
-admin@gmail.com
+admin1@gmail.com
 ```
 
 Password :
